@@ -11,3 +11,166 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.img {
+  width: 145px;
+  height: 205px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.not-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  text-align: center;
+  border: rgb(255, 154, 71) dashed 2px;
+  background-color: white;
+}
+
+header {
+  width: 100%;
+  /* background-color: rgb(240, 240, 240); */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+}
+
+.newBook {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 10px;
+  width: 700px;
+  border-radius: 20px;
+  margin: auto;
+}
+
+.newBook label {
+  font-weight: 700;
+}
+
+.newBook .add-img {
+  width: 147px;
+}
+
+.newBook .form {
+  width: 200px;
+}
+
+.newBook .form input {
+  width: calc(100% - 30px);
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 3px 14px;
+  border-radius: 20px;
+  border: rgb(255, 154, 71) 2px solid;
+  outline: none;
+}
+
+.newBook .form button {
+  transition: 200ms;
+  width: 100%;
+  font-size: 20px;
+  color: white;
+  background-color:rgb(255, 154, 71);
+  margin-top: 11px;
+  margin-bottom: 15px;
+  padding: 6px 17px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+}
+
+.newBook .form button:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.newBook .form button:active {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5) inset;
+}
+
+
+.newBook .about-book {
+  display: flex;
+  flex-direction: column;
+}
+
+.newBook .about-book {
+  display: flex;
+  flex-direction: column;
+}
+
+.newBook .about-book textarea{
+  width: calc(280px - 30px);
+  height: calc(171px - 14px);
+  font-size: 14px;
+  margin-top: 10px;
+  padding: 5px 15px;
+  border: rgb(255, 154, 71) 2px solid;
+  border-radius: 20px;
+  resize: none;
+  outline: none;
+}
+
+.catalog-books {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 750px;
+  margin: 30px auto;
+}
+
+.catalog-books .book {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  width: 320px;
+  background-color: rgb(252, 252, 252);
+  margin-bottom: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.catalog-books .book h4, .catalog-books .book p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.catalog-books .book .content {
+  margin-right: 12px;
+}
+
+
+.catalog-books .book .content p {
+  margin-top: 10px;
+}
+
+.catalog-books .book .content .img {
+  margin-top: 20px;
+}
+
+
+.catalog-books .book .content .not-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  font-weight: 700;
+  background-color:rgb(255, 154, 71);
+}
+
+.catalog-books .book .about-book {
+  width: 163px;
+  height: 277px;
+  overflow: auto;
+}
+
+.catalog-books .book .about-book p {
+  font-weight: 500;
+}
+
+.catalog-books .book .about-book p.text {
+  font-weight: 400;
+  margin-top: 10px;
+}
