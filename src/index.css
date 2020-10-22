@@ -25,8 +25,8 @@ code {
   align-items: center;
   font-weight: 700;
   text-align: center;
-  border: rgb(255, 154, 71) dashed 2px;
-  background-color: white;
+  color: white;
+  background-color: rgb(255, 154, 71);
 }
 
 header {
@@ -114,7 +114,6 @@ header {
 
 .catalog-books {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
   width: 750px;
   margin: 30px auto;
@@ -124,7 +123,7 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  width: 320px;
+  width: calc(100% - 40px);
   background-color: rgb(252, 252, 252);
   margin-bottom: 30px;
   border-radius: 20px;
@@ -137,6 +136,7 @@ header {
 }
 
 .catalog-books .book .content {
+  width: 200px;
   margin-right: 12px;
 }
 
@@ -160,11 +160,55 @@ header {
   background-color:rgb(255, 154, 71);
 }
 
-.catalog-books .book .about-book {
-  width: 163px;
-  height: 277px;
+.catalog-books .book .about-book .about-book-text {
+  width: 500px;
+  height: 215px;
   overflow: auto;
 }
+
+.catalog-books .book .about-book .input-text {
+  width: calc(100% - 20px) ;
+  height: 190px;
+  resize: none;
+  outline: none;
+}
+
+.catalog-books .book .about-book .btns  {
+  display: flex;
+  justify-content: space-between;
+  width: 290px;
+}
+
+.catalog-books .book .about-book .btns button {
+  transition: 200ms;
+  width: 140px;
+  font-size: 16px;
+  color: white;
+  background-color:rgb(255, 154, 71);
+  margin-top: 11px;
+  margin-bottom: 15px;
+  padding: 6px 17px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+}
+
+.catalog-books .book .about-book .btns button:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.catalog-books .book .about-book .btns button:active {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5) inset;
+}
+
+.catalog-books .book .about-book .btns button.edit {
+  background-color: rgb(99, 205, 50);
+}
+
+.catalog-books .book .about-book .btns button.delete {
+  background-color: rgb(205, 50, 50);
+}
+
 
 .catalog-books .book .about-book p {
   font-weight: 500;

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import RenderImg from './components/RenderImg'
 
 function App() {
 
@@ -71,9 +72,82 @@ function App() {
         img: "",
         title: "",
         author: "",
-        about_book: ""
+        about_book: "",
       }
     })
+  }
+
+  function btnEditBook(key) {
+    setCatalog(prev => {
+      return {
+          ...prev,
+          [key]: {
+            id: catalog[key].id,
+            img: catalog[key].img,
+            title: catalog[key].title,
+            author: catalog[key].author,
+            about_book: catalog[key].about_book,
+            edit: true,
+          }
+      }
+    })
+  }
+
+  function editTitleBook(e, key) {
+    setCatalog(prev => {
+      return {
+          ...prev,
+          [key]: {
+            id: catalog[key].id,
+            img: catalog[key].img,
+            title: e,
+            author: catalog[key].author,
+            about_book: catalog[key].about_book,
+            edit: true,
+          }
+      }
+    })
+  }
+
+  function editAuthorBook (e, key) {
+    setCatalog(prev => {
+      return {
+          ...prev,
+          [key]: {
+            id: catalog[key].id,
+            img: catalog[key].img,
+            title: catalog[key].title,
+            author: e,
+            about_book: catalog[key].about_book,
+            edit: true,
+          }
+      }
+    })
+  }
+  
+  function editAboutBook (e, key) {
+    setCatalog(prev => {
+      return {
+          ...prev,
+          [key]: {
+            id: catalog[key].id,
+            img: catalog[key].img,
+            title: catalog[key].title,
+            author: catalog[key].author,
+            about_book: e,
+            edit: true,
+          }
+      }
+    })
+  }
+
+  function deleteBook(key) {
+    setCatalog(() => {
+      let newCatalogBooks = catalog.filter(item => item.id !== key)
+      localStorage.setItem("books", JSON.stringify(newCatalogBooks));
+      return newCatalogBooks
+    })
+    console.log(catalog)
   }
 
   function addNewBook() {
@@ -86,16 +160,37 @@ function App() {
     setCatalog(prev => {
       let newCatalogBooks = [
         {
+          id: catalog.length,
           img: newBook.img,
           title: newBook.title,
           author: newBook.author,
           about_book: newBook.about_book,
+          edit: false
         },
         ...prev
       ]
       clearForm()
       localStorage.setItem("books", JSON.stringify(newCatalogBooks));
       return newCatalogBooks
+    })
+  }
+
+  function saveEditBook(key) {
+
+    setCatalog(prev => {
+      let newCatalogBooks = {
+          ...prev,
+          [key]: {
+            id: catalog[key].id,
+            img: catalog[key].img,
+            title: catalog[key].title,
+            author: catalog[key].author,
+            about_book: catalog[key].about_book,
+            edit: false,
+          }
+        }
+        localStorage.setItem("books", JSON.stringify(newCatalogBooks));
+        return newCatalogBooks
     })
   }
 
@@ -106,8 +201,17 @@ function App() {
       <> 
         <div className="book">
           <div className="content">
-            <h4>{catalog[key].title}</h4>
-            <p>Автор: {catalog[key].author}</p>
+            {catalog[key].edit === true ? 
+              <>
+                <h4><input type="text" id="title" className="input-title" onChange={e => editTitleBook(e.target.value, key)} value={catalog[key].title} /></h4>
+                <p>Автор:  <input type="text" id="author" className="input-author" onChange={e => editAuthorBook(e.target.value, key)} value={catalog[key].author} /></p>
+              </> : 
+              <>
+                <h4>{catalog[key].title}</h4>
+                <p>Автор: {catalog[key].author}</p>
+              </>
+            } 
+            
             {catalog[key].img !== "" ? 
               <img className="img" src={catalog[key].img} /> : 
               <div className="img not-img">{catalog[key].title}</div>
@@ -115,10 +219,30 @@ function App() {
           </div>
           <div className="about-book">
             <p>О книге:</p>
-            {catalog[key].about_book !== "" ? 
-              <p className="text">{catalog[key].about_book}</p> : 
-              <p className="text">Нет описания</p> 
-            } 
+            <div className="about-book-text">
+              {catalog[key].edit === true ? 
+                <>
+                  <textarea className="input-text" onChange={e => editAboutBook(e.target.value, key)} value={catalog[key].about_book} readonly></textarea>
+                </> : 
+                <>
+                  {catalog[key].about_book !== "" ? 
+                    <p className="text">{catalog[key].about_book}</p> : 
+                    <p className="text">Нет описания</p> 
+                  } 
+                </>
+              } 
+              
+            </div>
+            <div className="btns">
+              {catalog[key].edit === true ?
+                <button className="edit" onClick={() => saveEditBook(key)}>Сохранить</button>
+                :
+                <>
+                  <button className="edit" onClick={() => btnEditBook(key)}>Редактировать</button>
+                  <button className="delete" onClick={() => deleteBook(catalog[key].id)}>Удалить</button>
+                </>
+              }
+            </div>
           </div>
         </div>
       </>)
@@ -126,30 +250,18 @@ function App() {
     return books;
   }
 
-  function renderImg() {
-    if (newBook.img === "") {
-      return (<>
-        <div className="img not-preview">Обложка</div>
-      </>)
-    } else {
-      return (<>
-        <img className="img" src={newBook.img} />
-      </>)
-    }
-  }
-
   return (
     <div>
       <header>
         <div className="newBook">
           <div className="add-img">
-            {renderImg()}
+            <RenderImg img={newBook.img} title={newBook.title} />
             <label for="img">Обложка</label>
             <input type="file" name="img" id="img" onChange={(e) => getImage(e)} />
           </div>
           <div className="about-book">
             <label for="about-book">О книге:</label>
-            <textarea id="about-book" className="input-author" onChange={e => getAboutBook(e.target.value)} value={newBook.about_book} readonly></textarea>
+            <textarea id="about-book" className="input-text" onChange={e => getAboutBook(e.target.value)} value={newBook.about_book} readonly></textarea>
           </div>
           <div className="form">
             <label for="title">Название книги:</label> 
