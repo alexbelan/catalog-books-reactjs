@@ -93,6 +93,7 @@ function App() {
   }
 
   function btnEditBook(key) {
+    id.current--
     setCatalog(prev => {
       return {
           ...prev,
@@ -109,6 +110,7 @@ function App() {
   }
 
   function editTitleBook(e, key) {
+    id.current--
     setCatalog(prev => {
       return {
           ...prev,
@@ -125,6 +127,7 @@ function App() {
   }
 
   function editAuthorBook (e, key) {
+    id.current--
     setCatalog(prev => {
       return {
           ...prev,
@@ -141,6 +144,7 @@ function App() {
   }
   
   function editAboutBook (e, key) {
+    id.current--
     setCatalog(prev => {
       return {
           ...prev,
@@ -159,7 +163,7 @@ function App() {
   function deleteBook(key) {
     setCatalog(() => {
       id.current--
-      let newCatalogBooks = catalog.filter(item => item.id !== key)
+      let newCatalogBooks = Object.values(catalog).filter(item => item.id !== key)
       localStorage.setItem("books", JSON.stringify(newCatalogBooks));
       return newCatalogBooks
     })
@@ -174,22 +178,22 @@ function App() {
     if (newBook.author === "") {
       return alert("Нет автора книги")
     }
-    setCatalog(prev => {
-      let newCatalogBooks = [
-        {
-          id: id.current,
-          img: newBook.img,
-          title: newBook.title,
-          author: newBook.author,
-          about_book: newBook.about_book,
-          edit: false
-        },
-        ...prev
-      ]
+    setCatalog( () => {
+      let newCatalogBooks = Object.values(catalog)
+      newCatalogBooks.unshift({
+        id: id.current,
+        img: newBook.img,
+        title: newBook.title,
+        author: newBook.author,
+        about_book: newBook.about_book,
+        edit: false
+      })
       clearForm()
       localStorage.setItem("books", JSON.stringify(newCatalogBooks));
       return newCatalogBooks
     })
+    clearForm()
+    localStorage.setItem("books", JSON.stringify(catalog));
   }
 
   function saveEditBook(key) {
