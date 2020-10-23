@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function RenderImg(props) {
-    console.log(props.img)
     if (props.img === "") {
         return (<>
           <div className="img not-preview">{props.title}</div>

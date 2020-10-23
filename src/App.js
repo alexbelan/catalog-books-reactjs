@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import RenderImg from './components/RenderImg'
@@ -20,6 +20,21 @@ function App() {
     author: "",
     about_book: ""
   })
+
+  function catalogId() {
+    if(catalog.length == 0) {
+      return 0
+    } else {
+      return catalog[0].id
+    }
+  }
+
+  const id = useRef(catalogId())
+
+  useEffect(() => {
+    id.current++
+    console.log(catalogId())
+  }, [catalog])
 
   function getTitle(e) {
     setNewBook(prev => {
@@ -143,10 +158,12 @@ function App() {
 
   function deleteBook(key) {
     setCatalog(() => {
+      id.current--
       let newCatalogBooks = catalog.filter(item => item.id !== key)
       localStorage.setItem("books", JSON.stringify(newCatalogBooks));
       return newCatalogBooks
     })
+
     console.log(catalog)
   }
 
@@ -160,7 +177,7 @@ function App() {
     setCatalog(prev => {
       let newCatalogBooks = [
         {
-          id: catalog.length,
+          id: id.current,
           img: newBook.img,
           title: newBook.title,
           author: newBook.author,
